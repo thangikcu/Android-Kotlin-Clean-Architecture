@@ -13,4 +13,4 @@
 .externalNativeBuild
 .cxx
 local.properties
-!/secret.properties
+secret.properties

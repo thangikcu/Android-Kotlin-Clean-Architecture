@@ -1,4 +1,5 @@
-git update-index --skip-worktree gradle.properties
+git update-index --skip-worktree secret.properties
+git update-index --no-skip-worktree secret.properties
 
 afterEvaluate {
     //generate a file named fabric.properties with the api key and api secret when the project is being compiled
