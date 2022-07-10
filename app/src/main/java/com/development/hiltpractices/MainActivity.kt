@@ -1,21 +1,24 @@
 package com.development.hiltpractices
 
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
-import android.view.Menu
-import android.view.MenuItem
+import com.development.hiltpractices.data.local.sharedprefs.AppSharedPrefs
 import com.development.hiltpractices.databinding.ActivityMainBinding
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withTimeout
-import kotlin.system.measureTimeMillis
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.stateIn
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -26,6 +29,17 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         WindowCompat.setDecorFitsSystemWindows(window, false)
         super.onCreate(savedInstanceState)
+
+        if (AppSharedPrefs.firstOpen) {
+            AppSharedPrefs.firstOpen = false
+        }
+
+        val flow = flow<String> {
+            delay(500)
+        }
+        flow.onEach {
+
+        }.launchIn(lifecycleScope)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)

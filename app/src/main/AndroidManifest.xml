@@ -33,8 +33,13 @@
             tools:node="merge">
 
             <meta-data
-                android:name="com.development.hiltpractices.debugger.TimberInitializer"
+                android:name="com.development.hiltpractices.util.debug.TimberInitializer"
                 android:value="androidx.startup" />
+
+            <meta-data
+                android:name="androidx.work.WorkManagerInitializer"
+                android:value="androidx.startup"
+                tools:node="remove" />
         </provider>
     </application>
 </manifest>

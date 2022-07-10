@@ -1,4 +1,4 @@
-package com.development.hiltpractices.debugger
+package com.development.hiltpractices.util.debug
 
 import android.os.Build
 import android.util.Log
@@ -137,7 +137,6 @@ class Timber private constructor() {
         }
 
         /** Return whether a message at `priority` should be logged. */
-        @Deprecated("Use isLoggable(String, int)", ReplaceWith("this.isLoggable(null, priority)"))
         protected open fun isLoggable(priority: Int) = true
 
         /** Return whether a message at `priority` or `tag` should be logged. */
@@ -150,7 +149,7 @@ class Timber private constructor() {
                 return
             }
 
-            var message = message
+            @Suppress("NAME_SHADOWING") var message = message
             if (message.isNullOrEmpty()) {
                 if (t == null) {
                     return  // Swallow message if it's null and there's no throwable.

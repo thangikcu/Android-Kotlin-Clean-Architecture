@@ -1,4 +1,4 @@
-package com.development.hiltpractices.debugger
+package com.development.hiltpractices.util.debug
 
 import android.content.Context
 import androidx.startup.Initializer
