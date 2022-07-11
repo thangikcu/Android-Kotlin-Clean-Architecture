@@ -1,10 +1,16 @@
 package com.development.hiltpractices
 
+import android.content.Context
+import android.hardware.Sensor
+import android.hardware.SensorManager
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.core.view.WindowCompat
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -13,14 +19,21 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import com.development.hiltpractices.base.BaseActivity
 import com.development.hiltpractices.data.local.sharedprefs.AppSharedPrefs
 import com.development.hiltpractices.databinding.ActivityMainBinding
+import com.development.hiltpractices.util.ShakeDetector
+import com.development.hiltpractices.util.extension.launchActivity
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import vn.viktor.core.util.debug.LogcatActivity
 
 @AndroidEntryPoint
 class MainActivity :
-    BaseActivity<ActivityMainBinding, MainActivityViewModel>(R.layout.activity_main) {
+    BaseActivity<ActivityMainBinding, MainActivityViewModel>(R.layout.activity_main),
+    ShakeDetector.OnShakeListener {
 
     override val viewModel: MainActivityViewModel by viewModels()
+
+    private lateinit var mSensorManager: SensorManager
+    private lateinit var mShakeDetector: ShakeDetector
 
     private lateinit var appBarConfiguration: AppBarConfiguration
 
@@ -50,6 +63,28 @@ class MainActivity :
                 .setAction("Action", null).show()
         }
 
+
+        if (BuildConfig.SHAKE_LOG) {
+            mSensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
+            mShakeDetector = ShakeDetector(this)
+            lifecycle.addObserver(object : LifecycleEventObserver {
+                override fun onStateChanged(source: LifecycleOwner, event: Lifecycle.Event) {
+                    when (event) {
+                        Lifecycle.Event.ON_RESUME -> {
+                            mSensorManager.registerListener(
+                                mShakeDetector,
+                                mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+                                SensorManager.SENSOR_DELAY_UI
+                            )
+                        }
+                        Lifecycle.Event.ON_PAUSE -> {
+                            mSensorManager.unregisterListener(mShakeDetector)
+                        }
+                        else -> {}
+                    }
+                }
+            })
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -74,4 +109,11 @@ class MainActivity :
                 || super.onSupportNavigateUp()
     }
 
+    override fun onShake(count: Int) {
+        if (BuildConfig.SHAKE_LOG) {
+            if (count == 1) {
+                launchActivity<LogcatActivity>()
+            }
+        }
+    }
 }

@@ -11,12 +11,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 object Logcat {
     private const val MAX_LOG_SIZE = 50
 
-    private val logs: ArrayList<LogInfo> = ArrayList()
+    val logs: ArrayList<LogInfo> = ArrayList()
 
     private lateinit var logDao: LogDao
 
