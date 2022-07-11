@@ -2,9 +2,32 @@ package com.development.hiltpractices.base
 
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
+import androidx.databinding.DataBindingComponent
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
 
-class BaseActivity constructor(@LayoutRes contentLayoutId: Int) :
-    AppCompatActivity(contentLayoutId) {
+abstract class BaseActivity<ViewBinding : ViewDataBinding, ViewModel : BaseViewModel>
+constructor(@LayoutRes private val contentLayoutId: Int) :
+    AppCompatActivity() {
 
+    init {
+        addOnContextAvailableListener {
+            binding.notifyChange()
+        }
+    }
+
+    protected abstract val viewModel: ViewModel
+
+    private var bindingComponent: DataBindingComponent? = DataBindingUtil.getDefaultComponent()
+
+    protected val binding: ViewBinding by lazy(LazyThreadSafetyMode.NONE) {
+        DataBindingUtil.setContentView<ViewBinding>(this, contentLayoutId, bindingComponent).apply {
+            lifecycleOwner = this@BaseActivity
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        binding.unbind()
+    }
 }

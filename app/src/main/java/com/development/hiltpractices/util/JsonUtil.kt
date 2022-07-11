@@ -1,6 +1,5 @@
 package com.development.hiltpractices.util
 
-import com.development.hiltpractices.data.local.room.Log
 import com.squareup.moshi.*
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import java.text.SimpleDateFormat

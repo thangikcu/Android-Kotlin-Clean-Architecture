@@ -105,14 +105,14 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = JavaVersion.VERSION_11.toString()
     }
     buildFeatures {
-        viewBinding true
+        dataBinding true
     }
 }
 
@@ -137,7 +137,7 @@ dependencies {
     kapt "com.google.dagger:hilt-compiler:$hiltVersion"
 
     implementation 'androidx.startup:startup-runtime:1.1.1'
-    implementation 'androidx.databinding:databinding-runtime:7.2.1'
+//    implementation 'androidx.databinding:databinding-runtime:7.2.1'
 
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.3'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.3'

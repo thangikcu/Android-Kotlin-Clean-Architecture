@@ -20,7 +20,6 @@ import androidx.room.ProvidedTypeConverter
 import androidx.room.TypeConverter
 import com.development.hiltpractices.util.JsonUtil
 import com.development.hiltpractices.util.debug.LogInfo
-import java.util.*
 
 @ProvidedTypeConverter
 class RoomConverter {
@@ -32,16 +31,6 @@ class RoomConverter {
 
   @TypeConverter
   fun fromArrayLogInfoType(type: List<LogInfo>): String {
-    return JsonUtil.toJson(type)
-  }
-
-  @TypeConverter
-  fun fromString(value: String): Date {
-    return JsonUtil.fromJson(value)
-  }
-
-  @TypeConverter
-  fun fromInfoType(type: Date): String {
     return JsonUtil.toJson(type)
   }
 }

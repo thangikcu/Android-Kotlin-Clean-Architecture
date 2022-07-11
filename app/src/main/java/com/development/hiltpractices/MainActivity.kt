@@ -3,28 +3,26 @@ package com.development.hiltpractices
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import androidx.appcompat.app.AppCompatActivity
+import androidx.activity.viewModels
 import androidx.core.view.WindowCompat
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
+import com.development.hiltpractices.base.BaseActivity
 import com.development.hiltpractices.data.local.sharedprefs.AppSharedPrefs
 import com.development.hiltpractices.databinding.ActivityMainBinding
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.stateIn
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity :
+    BaseActivity<ActivityMainBinding, MainActivityViewModel>(R.layout.activity_main) {
+
+    override val viewModel: MainActivityViewModel by viewModels()
 
     private lateinit var appBarConfiguration: AppBarConfiguration
-    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         WindowCompat.setDecorFitsSystemWindows(window, false)
@@ -34,19 +32,15 @@ class MainActivity : AppCompatActivity() {
             AppSharedPrefs.firstOpen = false
         }
 
-        val flow = flow<String> {
-            delay(500)
+        binding.apply {
+            vm = viewModel
         }
-        flow.onEach {
-
-        }.launchIn(lifecycleScope)
-
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
 
         setSupportActionBar(binding.toolbar)
 
-        val navController = findNavController(R.id.nav_host_fragment_content_main)
+        val navController =
+            (supportFragmentManager.findFragmentById(R.id.nav_host_fragment_content_main) as NavHostFragment).navController
+
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
 
@@ -79,4 +73,5 @@ class MainActivity : AppCompatActivity() {
         return navController.navigateUp(appBarConfiguration)
                 || super.onSupportNavigateUp()
     }
+
 }
