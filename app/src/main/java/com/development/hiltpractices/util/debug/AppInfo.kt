@@ -1,3 +1,5 @@
+@file:Suppress("MemberVisibilityCanBePrivate")
+
 package com.development.hiltpractices.util.debug
 
 import android.content.pm.PackageInfo

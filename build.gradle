@@ -14,6 +14,7 @@ plugins {
     id 'org.jetbrains.kotlin.android' version '1.7.10' apply false
     id 'com.google.dagger.hilt.android' version "$hiltVersion" apply false
     id 'androidx.navigation.safeargs' version "$navigationVersion" apply false
+    id 'com.android.test' version '7.2.1' apply false
 }
 
 
