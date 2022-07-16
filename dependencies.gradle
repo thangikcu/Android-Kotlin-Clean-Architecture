@@ -3,6 +3,9 @@ ext {
     // kotlin
     kotlinVersion = '1.7.0'
 
+    spotlessVersion = '6.8.0'
+    ktlintVersion = '0.46.1'
+
     // architecture components
     fragmentVersion = '1.4.1'
     lifecycleVersion = '2.5.0'

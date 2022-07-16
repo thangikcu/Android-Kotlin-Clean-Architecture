@@ -14,4 +14,3 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Hilt Practices"
 include ':app'
-include ':benchmark'

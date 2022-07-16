@@ -102,19 +102,16 @@ android {
             minifyEnabled false
             shrinkResources false
             ext.enableCrashlytics = false
+            ext.alwaysUpdateBuildId = false
 /*            FirebasePerformance {
                 instrumentationEnabled false
             }*/
-        }
-        benchmark {
-            signingConfig signingConfigs.debug
-            matchingFallbacks = ['release']
-            debuggable false
         }
 
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            crunchPngs false
         }
     }
     compileOptions {
