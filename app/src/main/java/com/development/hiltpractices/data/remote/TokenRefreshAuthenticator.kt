@@ -21,7 +21,7 @@ class TokenRefreshAuthenticator(private val authorizationServiceProvider: () -> 
 
         App.loginUser = App.loginUser?.copy(token = newAccessToken)
 
-        return@runBlocking response.request().newBuilder()
+        return@runBlocking response.request.newBuilder()
             .header("Authorization", "Bearer $newAccessToken")
             .build()
     }
@@ -29,17 +29,17 @@ class TokenRefreshAuthenticator(private val authorizationServiceProvider: () -> 
 
 val Response.retryCount: Int
     get() {
-        var currentResponse = priorResponse()
+        var currentResponse = priorResponse
         var result = 0
         while (currentResponse != null) {
             result++
-            currentResponse = currentResponse.priorResponse()
+            currentResponse = currentResponse.priorResponse
         }
         return result
     }
 
 val Response.isRequestWithAccessToken: Boolean
     get() {
-        val header = request().header("Authorization")
+        val header = request.header("Authorization")
         return header != null && header.startsWith("Bearer")
     }

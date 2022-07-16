@@ -1,9 +1,8 @@
-package com.development.hiltpractices.data.local.room
+package com.development.hiltpractices.util.debug
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.development.hiltpractices.util.debug.LogInfo
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -12,5 +11,4 @@ import com.squareup.moshi.JsonClass
 data class Log(
     @ColumnInfo(name = "logs") @Json(name = "logs") val logs: List<LogInfo>,
     @PrimaryKey @Json(name = "id") val id: Int = 1
-) {
-}
+)

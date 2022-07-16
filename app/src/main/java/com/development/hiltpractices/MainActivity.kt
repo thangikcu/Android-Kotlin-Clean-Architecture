@@ -1,12 +1,16 @@
 package com.development.hiltpractices
 
+import android.app.SearchManager
 import android.content.Context
+import android.content.Intent
 import android.hardware.Sensor
 import android.hardware.SensorManager
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuInflater
 import android.view.MenuItem
 import androidx.activity.viewModels
+import androidx.core.view.MenuProvider
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
@@ -20,10 +24,10 @@ import com.development.hiltpractices.base.BaseActivity
 import com.development.hiltpractices.data.local.sharedprefs.AppSharedPrefs
 import com.development.hiltpractices.databinding.ActivityMainBinding
 import com.development.hiltpractices.util.ShakeDetector
+import com.development.hiltpractices.util.debug.LogcatActivity
 import com.development.hiltpractices.util.extension.launchActivity
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import vn.viktor.core.util.debug.LogcatActivity
 
 @AndroidEntryPoint
 class MainActivity :
@@ -63,6 +67,22 @@ class MainActivity :
                 .setAction("Action", null).show()
         }
 
+        addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.menu_main, menu)
+            }
+
+            override fun onMenuItemSelected(item: MenuItem): Boolean {
+                return when (item.itemId) {
+                    R.id.action_settings -> {
+                        onShake(1)
+                        return true
+                    }
+                    else -> false
+                }
+            }
+
+        }, this)
 
         if (BuildConfig.SHAKE_LOG) {
             mSensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
@@ -87,19 +107,15 @@ class MainActivity :
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return true
+    override fun onNewIntent(intent: Intent) {
+        handleIntent(intent)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        return when (item.itemId) {
-            R.id.action_settings -> true
-            else -> super.onOptionsItemSelected(item)
+    private fun handleIntent(intent: Intent) {
+
+        if (Intent.ACTION_SEARCH == intent.action) {
+            @Suppress("UNUSED_VARIABLE") val query = intent.getStringExtra(SearchManager.QUERY)
+            //use the query to search your data somehow
         }
     }
 

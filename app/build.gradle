@@ -4,7 +4,9 @@ plugins {
     id 'dagger.hilt.android.plugin'
     id 'kotlin-kapt'
     id 'kotlin-parcelize'
+    id 'androidx.navigation.safeargs.kotlin'
 }
+apply from: "$rootDir/dependencies.gradle"
 
 def versionMajor = 2
 def versionMinor = 7
@@ -26,6 +28,12 @@ android {
 
         buildConfigField "String", "API_KEY", secret['API_KEY']
         manifestPlaceholders = [apiKey: secret['API_KEY']]
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments["dagger.hilt.disableModulesHaveInstallInCheck"] = "true"
+            }
+        }
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -117,18 +125,25 @@ android {
 }
 
 dependencies {
-    implementation "androidx.activity:activity-ktx:$activityVersion"
+    implementation "androidx.navigation:navigation-fragment-ktx:$navigationVersion"
+    implementation "androidx.navigation:navigation-ui-ktx:$navigationVersion"
+
+    implementation "com.github.bumptech.glide:glide:$glideVersion"
+
+    implementation "androidx.paging:paging-runtime-ktx:$pagingVersion"
 
     implementation "androidx.work:work-runtime-ktx:$workVersion"
     implementation "androidx.hilt:hilt-work:$hiltWorkVersion"
     kapt "androidx.hilt:hilt-compiler:$hiltWorkVersion"
 
     implementation "androidx.room:room-ktx:$roomVersion"
+    implementation "androidx.room:room-paging:$roomVersion"
     implementation "androidx.room:room-runtime:$roomVersion"
     kapt "androidx.room:room-compiler:$roomVersion"
 
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
     implementation "com.squareup.retrofit2:converter-moshi:$moshiConverterVersion"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttpVersion"
 
     implementation "com.squareup.moshi:moshi-kotlin:$moshiVersion"
     kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion"
@@ -136,19 +151,22 @@ dependencies {
     implementation "com.google.dagger:hilt-android:$hiltVersion"
     kapt "com.google.dagger:hilt-compiler:$hiltVersion"
 
-    implementation 'androidx.startup:startup-runtime:1.1.1'
-//    implementation 'androidx.databinding:databinding-runtime:7.2.1'
+    implementation "androidx.startup:startup-runtime:$startupVersion"
 
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.3'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.3'
+    implementation "androidx.legacy:legacy-support-v4:$legacyVersion"
 
-    implementation 'androidx.core:core-ktx:1.8.0'
-    implementation 'androidx.appcompat:appcompat:1.4.2'
-    implementation 'com.google.android.material:material:1.7.0-alpha02'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion"
 
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.0'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.5.0'
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutineVersion"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutineVersion"
+
+    implementation "androidx.core:core-ktx:$coreVersion"
+    implementation "androidx.appcompat:appcompat:$appCompatVersion"
+    implementation "com.google.android.material:material:$materialVersion"
+    implementation "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
+
+    implementation "com.google.code.gson:gson:2.9.0"
 
     // For test
     testImplementation 'junit:junit:4.13.2'
@@ -168,6 +186,7 @@ def loadProperties(filename) {
     return properties
 }
 
+@SuppressWarnings('unused')
 def findPropertyByKey(key) {
     return project.findProperty(key)
 }

@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package com.development.hiltpractices.util.extension
 
 import android.graphics.Color
@@ -13,6 +15,10 @@ import java.security.NoSuchAlgorithmException
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
+
+fun String.dbQuery(): String {
+    return "%${replace(' ', '%')}%"
+}
 
 fun String.linkify(
     linkColor: Int = Color.BLUE,

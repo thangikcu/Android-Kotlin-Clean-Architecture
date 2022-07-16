@@ -1,4 +1,4 @@
-package vn.viktor.core.util.debug
+package com.development.hiltpractices.util.debug
 
 import android.graphics.Color
 import android.os.Bundle
@@ -13,9 +13,6 @@ import com.development.hiltpractices.base.BaseRecyclerAdapter
 import com.development.hiltpractices.base.BaseViewModel
 import com.development.hiltpractices.databinding.ActivityLogcatBinding
 import com.development.hiltpractices.databinding.ItemLogcatBinding
-import com.development.hiltpractices.util.debug.LogInfo
-import com.development.hiltpractices.util.debug.Logcat
-import com.development.hiltpractices.util.debug.LogcatDetailFragment
 import com.development.hiltpractices.util.extension.inTransaction
 
 class LogcatViewModel : BaseViewModel()

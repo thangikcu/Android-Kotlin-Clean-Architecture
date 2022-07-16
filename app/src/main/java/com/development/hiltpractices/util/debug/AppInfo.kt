@@ -1,14 +1,11 @@
 package com.development.hiltpractices.util.debug
 
-import android.content.Context
 import android.content.pm.PackageInfo
-import android.net.wifi.WifiManager
 import android.os.Build
 import android.provider.Settings
 import com.development.hiltpractices.App
 import com.development.hiltpractices.BuildConfig
 import com.development.hiltpractices.data.local.sharedprefs.AppSharedPrefs
-import java.util.*
 import kotlin.properties.Delegates
 
 object AppInfo {

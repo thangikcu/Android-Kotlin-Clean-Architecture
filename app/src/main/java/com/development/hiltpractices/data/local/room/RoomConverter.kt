@@ -18,6 +18,7 @@ package com.development.hiltpractices.data.local.room
 
 import androidx.room.ProvidedTypeConverter
 import androidx.room.TypeConverter
+import com.development.hiltpractices.feature.searchphoto.SearchPhotoResponse
 import com.development.hiltpractices.util.JsonUtil
 import com.development.hiltpractices.util.debug.LogInfo
 
@@ -30,7 +31,48 @@ class RoomConverter {
   }
 
   @TypeConverter
-  fun fromArrayLogInfoType(type: List<LogInfo>): String {
+  fun fromType(type: List<LogInfo>): String {
+    return JsonUtil.toJson(type)
+  }
+
+  @TypeConverter
+  fun fromUrlsString(value: String): SearchPhotoResponse.Photo.Urls {
+    return JsonUtil.fromJson(value)
+  }
+
+  @TypeConverter
+  fun fromType(type: SearchPhotoResponse.Photo.Urls): String {
+    return JsonUtil.toJson(type)
+  }
+
+  @TypeConverter
+  fun fromUserString(value: String): SearchPhotoResponse.Photo.User {
+    return JsonUtil.fromJson(value)
+  }
+
+  @TypeConverter
+  fun fromType(type: SearchPhotoResponse.Photo.User): String {
+    return JsonUtil.toJson(type)
+  }
+
+  @TypeConverter
+  fun fromTagString(value: String): List<SearchPhotoResponse.Photo.Tag> {
+    return JsonUtil.fromJson(value)
+  }
+
+  @JvmName("fromType1")
+  @TypeConverter
+  fun fromType(type: List<SearchPhotoResponse.Photo.Tag>): String {
+    return JsonUtil.toJson(type)
+  }
+
+  @TypeConverter
+  fun fromTopicSubmissionsString(value: String): SearchPhotoResponse.Photo.TopicSubmissions {
+    return JsonUtil.fromJson(value)
+  }
+
+  @TypeConverter
+  fun fromType(type: SearchPhotoResponse.Photo.TopicSubmissions): String {
     return JsonUtil.toJson(type)
   }
 }

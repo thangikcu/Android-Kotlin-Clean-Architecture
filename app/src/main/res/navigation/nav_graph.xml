@@ -3,7 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/FirstFragment">
+    app:startDestination="@id/SearchPhotoFragment">
+
+    <fragment
+        android:id="@+id/SearchPhotoFragment"
+        android:name="com.development.hiltpractices.feature.searchphoto.SearchPhotoFragment"
+        android:label="Search Photo"
+        tools:layout="@layout/fragment_search_photo">
+
+        <action
+            android:id="@+id/action_to_another"
+            app:destination="@+id/SearchPhotoFragment" />
+
+        <argument
+            android:name="query"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
 
     <fragment
         android:id="@+id/FirstFragment"
@@ -15,6 +31,7 @@
             android:id="@+id/action_FirstFragment_to_SecondFragment"
             app:destination="@id/SecondFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/SecondFragment"
         android:name="com.development.hiltpractices.feature.login.SecondFragment"

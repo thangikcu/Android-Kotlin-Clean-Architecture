@@ -6,8 +6,8 @@ import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.development.hiltpractices.common.Constants
 import com.development.hiltpractices.data.local.room.AppDatabase
-import com.development.hiltpractices.data.local.room.Log
 import com.development.hiltpractices.util.JsonUtil
+import com.development.hiltpractices.util.debug.Log
 import com.development.hiltpractices.util.debug.Timber
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
@@ -31,7 +31,7 @@ class SeedDatabaseWorker @AssistedInject constructor(
                         if (filename == Constants.LOG_DATA_FILENAME) {
 
                             val log: List<Log> = JsonUtil.fromJson(it.readText())
-                            appDatabase.logDao().insert(log)
+                            appDatabase.logDao.insert(log)
                         }
 
                         Result.success()

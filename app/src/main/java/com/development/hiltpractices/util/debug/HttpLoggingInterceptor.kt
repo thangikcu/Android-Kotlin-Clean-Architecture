@@ -4,7 +4,7 @@ package com.development.hiltpractices.util.debug
 import okhttp3.Headers
 import okhttp3.Interceptor
 import okhttp3.Response
-import okhttp3.internal.http.StatusLine.HTTP_CONTINUE
+import okhttp3.internal.http.HTTP_CONTINUE
 import okio.Buffer
 import okio.GzipSource
 import java.io.EOFException
@@ -21,19 +21,22 @@ class HttpLoggingInterceptor : Interceptor {
 
         val request = chain.request()
 
-        val logInfo = Logcat.createLogInfo(request.url().toString())
+        val logInfo = Logcat.createLogInfo(request.url.toString())
 
-        val requestBody = request.body()
+        logInfo.addContent(Thread.currentThread().toString(), "Run on")
+        logInfo.addLine()
+
+        val requestBody = request.body
 
         val connection = chain.connection()
 
-        logInfo.addContent(request.method(), "Method")
+        logInfo.addContent(request.method, "Method")
 
         if (connection != null) {
             logInfo.addContent(connection.protocol().toString(), "Protocol")
         }
 
-        val headers = request.headers()
+        val headers = request.headers
 
         if (requestBody != null) {
             // Request body headers are only present when installed as a network interceptor. When not
@@ -50,7 +53,7 @@ class HttpLoggingInterceptor : Interceptor {
             }
         }
 
-        for (i in 0 until headers.size()) {
+        for (i in 0 until headers.size) {
             val value = headers.value(i)
             logInfo.addContent(value, headers.name(i))
         }
@@ -61,13 +64,13 @@ class HttpLoggingInterceptor : Interceptor {
             requestBody == null -> {
                 contentRequestBody = "<-- request body null"
             }
-            bodyHasUnknownEncoding(request.headers()) -> {
+            bodyHasUnknownEncoding(request.headers) -> {
                 contentRequestBody = "<-- encoded body omitted"
             }
-            requestBody.isDuplex -> {
+            requestBody.isDuplex() -> {
                 contentRequestBody = "<-- duplex request body omitted"
             }
-            requestBody.isOneShot -> {
+            requestBody.isOneShot() -> {
                 contentRequestBody = "<-- one-shot body omitted"
             }
             else -> {
@@ -93,27 +96,28 @@ class HttpLoggingInterceptor : Interceptor {
             response = chain.proceed(request)
         } catch (e: Exception) {
             logInfo.addContent("<-- HTTP FAILED: $e")
+            logInfo.commitLog()
             throw e
         }
 
         val tookMs = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNs)
 
-        val responseBody = response.body()!!
+        val responseBody = response.body
         val contentLength = responseBody.contentLength()
         val bodySize = if (contentLength != -1L) "$contentLength-byte" else "unknown-length"
 
         logInfo.addLine()
 
-        logInfo.addContent(response.code().toString(), "Response code")
+        logInfo.addContent(response.code.toString(), "Response code")
 
-        if (response.message().isNotEmpty()) {
-            logInfo.addContent(response.message(), "Response message")
+        if (response.message.isNotEmpty()) {
+            logInfo.addContent(response.message, "Response message")
         }
         logInfo.addContent("(${tookMs}ms, $bodySize body})", "Time")
 
 
-        val responseHeaders = response.headers()
-        for (i in 0 until responseHeaders.size()) {
+        val responseHeaders = response.headers
+        for (i in 0 until responseHeaders.size) {
             val value = responseHeaders.value(i)
             logInfo.addContent(value, responseHeaders.name(i))
         }
@@ -191,7 +195,7 @@ internal fun Buffer.isProbablyUtf8(): Boolean {
 
 /** Returns the Content-Length as reported by the response headers. */
 fun Response.headersContentLength(): Long {
-    return headers()["Content-Length"]?.toLongOrDefault(-1L) ?: -1L
+    return headers["Content-Length"]?.toLongOrDefault(-1L) ?: -1L
 }
 
 fun String.toLongOrDefault(defaultValue: Long): Long {
@@ -204,11 +208,11 @@ fun String.toLongOrDefault(defaultValue: Long): Long {
 
 fun Response.promisesBody(): Boolean {
     // HEAD requests never yield a body regardless of the response headers.
-    if (request().method() == "HEAD") {
+    if (request.method == "HEAD") {
         return false
     }
 
-    val responseCode = code()
+    val responseCode = code
     if ((responseCode < HTTP_CONTINUE || responseCode >= 200) &&
         responseCode != HttpURLConnection.HTTP_NO_CONTENT &&
         responseCode != HttpURLConnection.HTTP_NOT_MODIFIED

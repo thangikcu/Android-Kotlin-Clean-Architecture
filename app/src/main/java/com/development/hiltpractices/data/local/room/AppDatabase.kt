@@ -10,13 +10,23 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.workDataOf
 import com.development.hiltpractices.common.Constants
+import com.development.hiltpractices.feature.searchphoto.SearchPhotoResponse
+import com.development.hiltpractices.util.debug.Log
 import com.development.hiltpractices.workers.SeedDatabaseWorker
 
-@Database(entities = [Log::class], version = 1, exportSchema = false)
+@Database(
+    entities = [Log::class, RemoteKey::class, SearchPhotoResponse.Photo::class],
+    version = 1,
+    exportSchema = false
+)
 @TypeConverters(RoomConverter::class)
 abstract class AppDatabase : RoomDatabase() {
 
-    abstract fun logDao(): LogDao
+    abstract val logDao: LogDao
+
+    abstract val unsplashDao: UnsplashDao
+
+    abstract val remoteKeyDao: RemoteKeyDao
 
     companion object {
 
@@ -35,6 +45,7 @@ abstract class AppDatabase : RoomDatabase() {
             Constants.APP_DATABASE_NAME
         )
             .addTypeConverter(RoomConverter())
+            .fallbackToDestructiveMigration()
             .addCallback(object : RoomDatabase.Callback() {
                 override fun onCreate(db: SupportSQLiteDatabase) {
                     super.onCreate(db)

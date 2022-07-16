@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.startup.Initializer
 import com.development.hiltpractices.BuildConfig
 
+@Suppress("unused")
 class TimberInitializer : Initializer<Unit> {
 
     override fun create(context: Context) {

@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package com.development.hiltpractices.util
 
 import android.app.Dialog

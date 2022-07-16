@@ -124,7 +124,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/logcat_detail_toolbar"
-            android:background="#FFFFFF">
+            android:background="#FFFFFF"
+            android:scrollbarStyle="insideOverlay"
+            android:scrollbars="vertical">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_content"

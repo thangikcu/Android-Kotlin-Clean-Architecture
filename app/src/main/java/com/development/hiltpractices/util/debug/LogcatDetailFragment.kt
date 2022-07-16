@@ -21,7 +21,10 @@ import com.development.hiltpractices.databinding.FragmentLogcatDedailBinding
 import com.development.hiltpractices.util.Utils
 import com.development.hiltpractices.util.extension.hideKeyboard
 import com.development.hiltpractices.util.extension.showKeyboard
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.*
 
 class LogcatDetailViewModel : BaseViewModel()
@@ -39,66 +42,68 @@ class LogcatDetailFragment(private val logInfo: LogInfo) :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.btnClose.setOnClickListener {
-            requireActivity().onBackPressed()
-        }
+        with(binding) {
+            btnClose.setOnClickListener {
+                requireActivity().onBackPressed()
+            }
 
-        binding.btnSendMail.setOnClickListener {
-            if (context != null) {
-                Utils.sendEmail(
-                    requireContext(),
-                    requireContext().applicationInfo
-                        .loadLabel(requireContext().packageManager).toString(),
-                    logInfo.getContent(), ""
+            btnSendMail.setOnClickListener {
+                if (context != null) {
+                    Utils.sendEmail(
+                        requireContext(),
+                        requireContext().applicationInfo
+                            .loadLabel(requireContext().packageManager).toString(),
+                        logInfo.getContent(), ""
+                    )
+                }
+            }
+
+            edtSearch.showSoftInputOnFocus = true
+
+            btnSearch.setOnClickListener {
+                apply {
+                    edtSearch.visibility = View.VISIBLE
+
+                    btnSearch.visibility = View.GONE
+                    layoutSearchResult.visibility = View.GONE
+                    edtSearch.showKeyboard()
+                }
+            }
+            edtSearch.onFocusChangeListener = OnFocusChangeListener { v, hasFocus: Boolean ->
+                if (!hasFocus) {
+                    hideKeyboard(v)
+                    btnSearch.visibility = View.VISIBLE
+                    edtSearch.visibility = View.GONE
+                }
+            }
+            edtSearch.setOnEditorActionListener { _, actionId: Int, _: KeyEvent? ->
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    edtSearch.clearFocus()
+                    viewLifecycleOwner.lifecycleScope.launch {
+                        search()
+                    }
+                    return@setOnEditorActionListener true
+                }
+                false
+            }
+
+            tvContent.setTextIsSelectable(true)
+            btnSearchResultUp.setOnClickListener {
+                onClickGoToSearchResult(
+                    true
                 )
             }
-        }
-
-        binding.edtSearch.showSoftInputOnFocus = true
-
-        binding.btnSearch.setOnClickListener {
-            binding.apply {
-                edtSearch.visibility = View.VISIBLE
-
-                btnSearch.visibility = View.GONE
-                layoutSearchResult.visibility = View.GONE
-                edtSearch.showKeyboard()
+            btnSearchResultDown.setOnClickListener {
+                onClickGoToSearchResult(
+                    false
+                )
             }
-        }
-        binding.edtSearch.onFocusChangeListener = OnFocusChangeListener { v, hasFocus: Boolean ->
-            if (!hasFocus) {
-                hideKeyboard(v)
-                binding.btnSearch.visibility = View.VISIBLE
-                binding.edtSearch.visibility = View.GONE
-            }
-        }
-        binding.edtSearch.setOnEditorActionListener { _, actionId: Int, _: KeyEvent? ->
-            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                viewLifecycleOwner.lifecycleScope.launch {
-                    search()
-                }
-                binding.edtSearch.clearFocus()
-                return@setOnEditorActionListener true
-            }
-            false
-        }
 
-        binding.tvContent.setTextIsSelectable(true)
-        binding.btnSearchResultUp.setOnClickListener {
-            onClickGoToSearchResult(
-                true
-            )
-        }
-        binding.btnSearchResultDown.setOnClickListener {
-            onClickGoToSearchResult(
-                false
-            )
-        }
-        view.postDelayed({
             viewLifecycleOwner.lifecycleScope.launch {
-                binding.tvContent.text = logInfo.getContent()
+                delay(500)
+                tvContent.text = logInfo.getContent()
             }
-        }, 500)
+        }
     }
 
     private fun onClickGoToSearchResult(goUp: Boolean) {
@@ -156,72 +161,83 @@ class LogcatDetailFragment(private val logInfo: LogInfo) :
     }
 
     @SuppressLint("SetTextI18n")
-    private fun search() {
+    private suspend fun search() {
         searchResultList = null
 
-        val searchText: String = binding.edtSearch.text.toString().trim { it <= ' ' }
+        with(binding) {
+            val searchText: String = edtSearch.text.toString().trim { it <= ' ' }
 
-        if (!TextUtils.isEmpty(searchText)) {
-            boldTypingText(
-                binding.tvContent.text.toString(),
-                searchText
-            ) { contentResult, searchResultList ->
-                currentIndexScrollTo = 0
-                this@LogcatDetailFragment.searchResultList = searchResultList
-                binding.tvContent.text = contentResult
-                binding.layoutSearchResult.visibility = View.VISIBLE
-                if (searchResultList.size > 0) {
-                    val spannable = binding.tvContent.text as SpannableString
-                    val keyWord: String =
-                        binding.edtSearch.text.toString().trim { it <= ' ' }
-                            .lowercase(Locale.getDefault())
-                    val indexKeyWord =
-                        searchResultList[currentIndexScrollTo].second
-                    val endIndex = indexKeyWord + keyWord.length
-                    spannable.setSpan(
-                        Color.parseColor("#00E5FF"),
-                        indexKeyWord,
-                        endIndex,
-                        Spanned.SPAN_INCLUSIVE_INCLUSIVE
-                    )
-                    scrollToSearchResult(currentIndexScrollTo)
-                } else {
-                    binding.tvSearchResult.text = "0 of 0"
+            if (!TextUtils.isEmpty(searchText)) {
+                boldTypingText(
+                    tvContent.text.toString(),
+                    searchText
+                ) { contentResult, searchResultList ->
+                    currentIndexScrollTo = 0
+                    this@LogcatDetailFragment.searchResultList = searchResultList
+                    tvContent.text = contentResult
+                    layoutSearchResult.visibility = View.VISIBLE
+                    if (searchResultList.size > 0) {
+                        val spannable = tvContent.text as SpannableString
+                        val keyWord: String =
+                            edtSearch.text.toString().trim { it <= ' ' }
+                                .lowercase(Locale.getDefault())
+                        val indexKeyWord =
+                            searchResultList[currentIndexScrollTo].second
+                        val endIndex = indexKeyWord + keyWord.length
+                        spannable.setSpan(
+                            BackgroundColorSpan(
+                                Color.parseColor("#00E5FF")
+                            ),
+                            indexKeyWord,
+                            endIndex,
+                            Spanned.SPAN_INCLUSIVE_INCLUSIVE
+                        )
+                        scrollToSearchResult(currentIndexScrollTo)
+                    } else {
+                        tvSearchResult.text = "0 of 0"
+                    }
                 }
+            } else {
+                tvContent.text = logInfo.getContent()
             }
-        } else {
-            binding.tvContent.text = logInfo.getContent()
         }
     }
 
-    private fun boldTypingText(
+    private suspend fun boldTypingText(
         content: String,
         boldString: String,
         result: (SpannableString, MutableList<Pair<Int, Int>>) -> Unit
     ) {
-        val searchResultList: MutableList<Pair<Int, Int>> = arrayListOf()
-        val spannable = SpannableString(content)
-        val textLower = content.lowercase(Locale.getDefault())
-        val boldLower = boldString.lowercase(Locale.getDefault())
-        val totalIndexBold: MutableList<Int> = arrayListOf()
-        var indexBold = textLower.indexOf(boldLower)
-        while (indexBold >= 0) {
-            val lineNumber: Int = binding.tvContent.layout.getLineForOffset(indexBold)
-            val coordinateLineY: Int = binding.tvContent.layout.getLineTop(lineNumber)
-            searchResultList.add(Pair(coordinateLineY, indexBold))
-            totalIndexBold.add(indexBold)
-            indexBold = textLower.indexOf(boldLower, indexBold + boldLower.length)
+        withContext(Dispatchers.Default) {
+            val searchResultList: MutableList<Pair<Int, Int>> = arrayListOf()
+            val spannable = SpannableString(content)
+            val textLower = content.lowercase(Locale.getDefault())
+            val boldLower = boldString.lowercase(Locale.getDefault())
+            val totalIndexBold: MutableList<Int> = arrayListOf()
+            var indexBold = textLower.indexOf(boldLower)
+            while (indexBold >= 0) {
+                val lineNumber: Int = binding.tvContent.layout.getLineForOffset(indexBold)
+                val coordinateLineY: Int = binding.tvContent.layout.getLineTop(lineNumber)
+                searchResultList.add(Pair(coordinateLineY, indexBold))
+                totalIndexBold.add(indexBold)
+                indexBold = textLower.indexOf(boldLower, indexBold + boldLower.length)
+            }
+            for (each in totalIndexBold) {
+                val endIndex = each + boldLower.length
+                spannable.setSpan(
+                    BackgroundColorSpan(
+                        Color.parseColor("#FF9100")
+                    ),
+                    each,
+                    endIndex,
+                    Spanned.SPAN_INCLUSIVE_INCLUSIVE
+                )
+            }
+
+            withContext(Dispatchers.Main){
+                result.invoke(spannable, searchResultList)
+            }
         }
-        for (each in totalIndexBold) {
-            val endIndex = each + boldLower.length
-            spannable.setSpan(
-                Color.parseColor("#FF9100"),
-                each,
-                endIndex,
-                Spanned.SPAN_INCLUSIVE_INCLUSIVE
-            )
-        }
-        result.invoke(spannable, searchResultList)
     }
 
     companion object {

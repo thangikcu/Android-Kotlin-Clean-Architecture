@@ -45,9 +45,9 @@ abstract class BaseRecyclerAdapter<Item : Any, ViewBinding : ViewDataBinding>(
         ).apply {
             itemView.setOnClickListener {
                 onItemClick?.invoke(
-                    getItem(adapterPosition),
+                    getItem(absoluteAdapterPosition),
                     itemView,
-                    adapterPosition
+                    absoluteAdapterPosition
                 )
             }
             bindFirstTime(binding)

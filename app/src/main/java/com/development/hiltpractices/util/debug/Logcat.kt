@@ -1,10 +1,11 @@
+@file:Suppress("unused")
+
 package com.development.hiltpractices.util.debug
 
 import android.annotation.SuppressLint
 import com.development.hiltpractices.App
 import com.development.hiltpractices.BuildConfig
 import com.development.hiltpractices.data.local.room.AppDatabase
-import com.development.hiltpractices.data.local.room.Log
 import com.development.hiltpractices.data.local.room.LogDao
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -25,7 +26,7 @@ object Logcat {
 
     init {
         if (BuildConfig.SHAKE_LOG) {
-            logDao = AppDatabase.getDatabase(App.INSTANCE).logDao()
+            logDao = AppDatabase.getDatabase(App.INSTANCE).logDao
 
             coroutineScope = CoroutineScope(Dispatchers.IO)
 

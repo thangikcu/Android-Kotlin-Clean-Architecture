@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package com.development.hiltpractices.util.extension
 
 import android.animation.ValueAnimator
@@ -19,10 +21,9 @@ import androidx.annotation.RequiresApi
 import androidx.core.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import com.development.hiltpractices.util.extension.inflateLayout
 
-fun View.fadeOut(fadeDuration:Long = 300,endAlpha:Float = 0f){
-    ValueAnimator.ofFloat(1f,endAlpha).apply {
+fun View.fadeOut(fadeDuration: Long = 300, endAlpha: Float = 0f) {
+    ValueAnimator.ofFloat(1f, endAlpha).apply {
         duration = fadeDuration
         addUpdateListener {
             val animatedValue = it.animatedValue as Float
@@ -31,8 +32,8 @@ fun View.fadeOut(fadeDuration:Long = 300,endAlpha:Float = 0f){
     }.start()
 }
 
-fun View.fadeIn(fadeDuration:Long = 300){
-    ValueAnimator.ofFloat(0f,1f).apply {
+fun View.fadeIn(fadeDuration: Long = 300) {
+    ValueAnimator.ofFloat(0f, 1f).apply {
         duration = fadeDuration
         addUpdateListener {
             val animatedValue = it.animatedValue as Float
@@ -135,7 +136,7 @@ fun ViewGroup.hideAllChild() {
 }
 
 fun <T : ViewDataBinding> ViewGroup.bind(layoutId: Int): T {
-    return DataBindingUtil.inflate(layoutInflater, layoutId, this, true)
+    return DataBindingUtil.inflate(layoutInflater, layoutId, this, false)
 }
 
 val View.layoutInflater: LayoutInflater
@@ -185,18 +186,6 @@ fun createBitmapSafely(width: Int, height: Int, config: Bitmap.Config, retryCoun
 
 }
 
-fun View.doOnLayout(onLayout: (View) -> Boolean) {
-    addOnLayoutChangeListener(object : View.OnLayoutChangeListener {
-        override fun onLayoutChange(
-            view: View, left: Int, top: Int, right: Int, bottom: Int,
-            oldLeft: Int, oldTop: Int, oldRight: Int, oldBottom: Int
-        ) {
-            if (onLayout(view)) {
-                view.removeOnLayoutChangeListener(this)
-            }
-        }
-    })
-}
 
 /**
  * Register a callback to be invoked when the global layout state or the visibility of views

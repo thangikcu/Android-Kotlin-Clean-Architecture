@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package com.development.hiltpractices.data.local.sharedprefs
 
 import android.content.Context

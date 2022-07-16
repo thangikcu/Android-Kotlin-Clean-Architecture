@@ -4,7 +4,6 @@ import android.content.Context
 import com.development.hiltpractices.data.local.room.AppDatabase
 import com.development.hiltpractices.util.JsonUtil
 import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
