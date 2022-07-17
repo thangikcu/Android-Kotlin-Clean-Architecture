@@ -1,7 +1,7 @@
 ext {
 
     // kotlin
-    kotlinVersion = '1.7.0'
+    kotlinVersion = '1.7.10'
 
     spotlessVersion = '6.8.0'
     ktlintVersion = '0.46.1'

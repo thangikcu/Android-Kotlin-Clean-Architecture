@@ -2,6 +2,7 @@
 
 package com.development.hiltpractices.util.debug
 
+import android.annotation.SuppressLint
 import android.content.pm.PackageInfo
 import android.os.Build
 import android.provider.Settings
@@ -30,6 +31,7 @@ object AppInfo {
         var deviceId: String? = AppSharedPrefs.deviceId
 
         if (deviceId.isNullOrEmpty()) {
+            @SuppressLint("HardwareIds")
             val androidId = Settings.Secure.getString(
                 context.contentResolver,
                 Settings.Secure.ANDROID_ID
@@ -41,7 +43,6 @@ object AppInfo {
 
         DEVICE_ID = deviceId
         DEVICE_NAME = "${Build.MANUFACTURER} ${Build.MODEL} (${Build.VERSION.SDK_INT})"
-
         VERSION =
             "v.${packageInfo.versionName}-${PackageInfoCompat.getLongVersionCode(packageInfo)}"
         OS_VERSION = Build.VERSION.RELEASE
