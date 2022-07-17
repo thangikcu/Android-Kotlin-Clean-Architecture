@@ -17,7 +17,7 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.create
-import java.time.Duration
+import java.util.concurrent.TimeUnit
 import javax.inject.Named
 import javax.inject.Singleton
 
@@ -45,8 +45,8 @@ class NetworkModule {
     @Named(UNSPLASH_RETROFIT)
     fun provideUnsplashRetrofit(moshi: Moshi): Retrofit {
         val okHttpClientBuilder: OkHttpClient.Builder = OkHttpClient.Builder()
-            .connectTimeout(Duration.ofSeconds(Constants.NETWORK_TIMEOUT))
-            .readTimeout(Duration.ofSeconds(Constants.NETWORK_TIMEOUT))
+            .connectTimeout(Constants.NETWORK_TIMEOUT, TimeUnit.MILLISECONDS)
+            .readTimeout(Constants.NETWORK_TIMEOUT, TimeUnit.MILLISECONDS)
             .addInterceptor { chain ->
                 val request = chain.request()
 

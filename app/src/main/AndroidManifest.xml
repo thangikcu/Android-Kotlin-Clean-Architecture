@@ -7,6 +7,7 @@
     <dist:module dist:instant="true" />
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:name=".App"
@@ -18,7 +19,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.HiltPractices"
-        tools:targetApi="31">
+        tools:targetApi="s">
+
         <profileable
             android:shell="true"
             tools:targetApi="q" />

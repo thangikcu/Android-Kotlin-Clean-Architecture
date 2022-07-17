@@ -11,8 +11,6 @@ import androidx.appcompat.widget.SearchView
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.flowWithLifecycle
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.paging.LoadState
@@ -20,10 +18,11 @@ import com.development.hiltpractices.R
 import com.development.hiltpractices.base.BaseFragment
 import com.development.hiltpractices.common.adapter.PagingLoadStateAdapter
 import com.development.hiltpractices.databinding.FragmentSearchPhotoBinding
+import com.development.hiltpractices.util.NetworkMonitor
+import com.development.hiltpractices.util.extension.launchAndCollectLatestIn
 import com.development.hiltpractices.util.extension.showToast
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class SearchPhotoFragment :
@@ -40,6 +39,8 @@ class SearchPhotoFragment :
 
     private val args: SearchPhotoFragmentArgs by navArgs()
 
+    @Inject
+    lateinit var networkMonitor: NetworkMonitor
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -52,19 +53,22 @@ class SearchPhotoFragment :
         }
 
         photoAdapter.addLoadStateListener {
-            (it.refresh as? LoadState.Error)?.error?.let { e ->
+            val stateError = it.refresh as? LoadState.Error
+                ?: it.prepend as? LoadState.Error
+                ?: it.append as? LoadState.Error
+
+            stateError?.error?.let { e ->
                 showToast(e.toString())
             }
         }
 
         setUpMenu()
 
-        with(viewLifecycleOwner) {
-            lifecycleScope.launch {
-                viewModel.photos.flowWithLifecycle(lifecycle).collectLatest {
-                    photoAdapter.submitData(it)
-                }
-            }
+        viewModel.photos.launchAndCollectLatestIn(viewLifecycleOwner) {
+            photoAdapter.submitData(it)
+        }
+        networkMonitor.connectStateFlow.launchAndCollectLatestIn(viewLifecycleOwner) {
+            showToast("Internet connection is ${if (it) "available" else "unavailable"}")
         }
     }
 

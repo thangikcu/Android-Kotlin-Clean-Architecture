@@ -4,7 +4,7 @@ package com.development.hiltpractices.util.debug
 import okhttp3.Headers
 import okhttp3.Interceptor
 import okhttp3.Response
-import okhttp3.internal.http.HTTP_CONTINUE
+import okhttp3.internal.http.StatusLine.Companion.HTTP_CONTINUE
 import okio.Buffer
 import okio.GzipSource
 import java.io.EOFException
@@ -102,7 +102,7 @@ class HttpLoggingInterceptor : Interceptor {
 
         val tookMs = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNs)
 
-        val responseBody = response.body
+        val responseBody = response.body!!
         val contentLength = responseBody.contentLength()
         val bodySize = if (contentLength != -1L) "$contentLength-byte" else "unknown-length"
 

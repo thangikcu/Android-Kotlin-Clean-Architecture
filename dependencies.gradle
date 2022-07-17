@@ -6,6 +6,9 @@ ext {
     spotlessVersion = '6.8.0'
     ktlintVersion = '0.46.1'
 
+    // For debug
+    leakCanaryVersion = '2.9.1'
+
     // architecture components
     fragmentVersion = '1.4.1'
     lifecycleVersion = '2.5.0'
@@ -19,8 +22,8 @@ ext {
     legacyVersion = '1.0.0'
     coroutineVersion = '1.6.4'
     coreVersion = '1.8.0'
-    appCompatVersion = '1.6.0-alpha05'
-    materialVersion = '1.7.0-alpha03'
+    appCompatVersion = '1.4.2'
+    materialVersion = '1.6.1'
     constraintLayoutVersion = '2.1.4'
 
     // di
@@ -29,7 +32,7 @@ ext {
 
     // network
     retrofitVersion = '2.9.0'
-    okhttpVersion = '5.0.0-alpha.10'
+    okhttpVersion = '4.10.0'
     sandwichVersion = '1.2.5'
 
     // moshi

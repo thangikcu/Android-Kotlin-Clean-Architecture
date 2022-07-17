@@ -16,7 +16,7 @@ import com.development.hiltpractices.workers.SeedDatabaseWorker
 
 @Database(
     entities = [Log::class, RemoteKey::class, SearchPhotoResponse.Photo::class],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 @TypeConverters(RoomConverter::class)

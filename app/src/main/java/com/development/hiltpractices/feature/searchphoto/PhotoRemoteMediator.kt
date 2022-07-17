@@ -5,10 +5,12 @@ import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
+import com.development.hiltpractices.common.exception.NetworkException
 import com.development.hiltpractices.data.local.room.AppDatabase
 import com.development.hiltpractices.data.local.room.RemoteKey
 import com.development.hiltpractices.data.remote.api.UnsplashService
 import com.development.hiltpractices.data.remote.getOrThrow
+import com.development.hiltpractices.util.NetworkMonitor
 import com.development.hiltpractices.util.debug.Timber
 import java.util.concurrent.TimeUnit
 
@@ -16,6 +18,7 @@ private const val STARTING_PAGE_INDEX = 1
 
 @OptIn(ExperimentalPagingApi::class)
 class PhotoRemoteMediator(
+    private val networkMonitor: NetworkMonitor,
     private val unsplashService: UnsplashService,
     private val appDatabase: AppDatabase,
     private val query: String,
@@ -42,6 +45,10 @@ class PhotoRemoteMediator(
         loadType: LoadType,
         state: PagingState<Int, SearchPhotoResponse.Photo>,
     ): MediatorResult {
+
+        if (!networkMonitor.isConnected) {
+            return MediatorResult.Error(NetworkException())
+        }
 
         val page = when (loadType) {
             LoadType.REFRESH -> {

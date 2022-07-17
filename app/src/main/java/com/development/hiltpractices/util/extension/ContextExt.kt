@@ -19,18 +19,14 @@ import androidx.annotation.LayoutRes
 
 val Context.isInternetAvailable: Boolean
     get() {
-        val connectivityManager =
-            getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val connectivityManager = getSystemService(ConnectivityManager::class.java)
 
         val activeNetwork = connectivityManager.activeNetwork ?: return false
+
         val networkCapabilities =
             connectivityManager.getNetworkCapabilities(activeNetwork) ?: return false
-        return when {
-            networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
-            networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
-            networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
-            else -> false
-        }
+
+        return networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
     }
 
 fun Context.browse(url: String, newTask: Boolean = false): Boolean {

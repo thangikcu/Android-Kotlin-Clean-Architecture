@@ -8,6 +8,7 @@ import com.development.hiltpractices.data.local.room.AppDatabase
 import com.development.hiltpractices.data.remote.api.UnsplashService
 import com.development.hiltpractices.feature.searchphoto.PhotoRemoteMediator
 import com.development.hiltpractices.feature.searchphoto.SearchPhotoResponse
+import com.development.hiltpractices.util.NetworkMonitor
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
@@ -18,6 +19,7 @@ import javax.inject.Singleton
 class MainRepository @Inject constructor(
     private val unsplashService: UnsplashService,
     private val appDatabase: AppDatabase,
+    private val networkMonitor: NetworkMonitor,
 ) {
     @OptIn(ExperimentalPagingApi::class)
     fun getPhotos(query: String): Flow<PagingData<SearchPhotoResponse.Photo>> {
@@ -30,7 +32,10 @@ class MainRepository @Inject constructor(
                 initialLoadSize = PAGE_SIZE,
                 enablePlaceholders = false
             ),
-            remoteMediator = PhotoRemoteMediator(unsplashService, appDatabase, query),
+            remoteMediator = PhotoRemoteMediator(networkMonitor,
+                unsplashService,
+                appDatabase,
+                query),
             pagingSourceFactory = pagingSource
         ).flow.flowOn(Dispatchers.IO)
     }

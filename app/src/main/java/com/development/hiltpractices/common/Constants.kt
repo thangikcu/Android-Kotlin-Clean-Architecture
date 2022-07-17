@@ -6,7 +6,7 @@ package com.development.hiltpractices.common
 object Constants {
     const val APP_DATABASE_NAME = "app_database"
 
-    const val NETWORK_TIMEOUT = 10L
+    const val NETWORK_TIMEOUT = 1000L * 5
 
     const val DEFAULT_FIRST_PAGE = 1
     const val DEFAULT_NUM_VISIBLE_THRESHOLD = 3

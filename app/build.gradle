@@ -18,8 +18,8 @@ android {
 
     defaultConfig {
         applicationId "com.development.hiltpractices"
-        minSdk 23
-        targetSdk 32
+        minSdkVersion  23
+        targetSdk 23
         versionCode versionMajor * 1000 + versionMinor * 100 + versionPatch * 10 + versionTemp
         resConfigs "en", "vi"
         archivesBaseName = "${versionMajor}.${versionMinor}.${versionPatch}.(${versionTemp})"
@@ -36,6 +36,18 @@ android {
         }
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    compileOptions {
+//        coreLibraryDesugaringEnabled true
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    buildFeatures {
+        dataBinding true
     }
 
     flavorDimensions "default"
@@ -114,19 +126,11 @@ android {
             crunchPngs false
         }
     }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
-    }
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_11.toString()
-    }
-    buildFeatures {
-        dataBinding true
-    }
 }
 
 dependencies {
+//    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
+
     implementation "androidx.navigation:navigation-fragment-ktx:$navigationVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$navigationVersion"
 
@@ -165,11 +169,13 @@ dependencies {
 
     implementation "androidx.core:core-ktx:$coreVersion"
     implementation "androidx.appcompat:appcompat:$appCompatVersion"
+    implementation "androidx.appcompat:appcompat-resources:$appCompatVersion"
+
     implementation "com.google.android.material:material:$materialVersion"
     implementation "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
 
-    implementation "com.google.code.gson:gson:2.9.0"
-    implementation "io.coil-kt:coil-compose:2.0.0"
+    // For debug
+    debugImplementation "com.squareup.leakcanary:leakcanary-android:$leakCanaryVersion"
 
     // For test
     testImplementation 'junit:junit:4.13.2'
