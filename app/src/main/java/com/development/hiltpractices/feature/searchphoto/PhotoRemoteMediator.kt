@@ -100,7 +100,7 @@ class PhotoRemoteMediator(
                 appDatabase.unsplashDao.insert(results)
             }
             return MediatorResult.Success(endOfPaginationReached = endOfPaginationReached)
-        } catch (e: Throwable) {
+        } catch (e: Exception) {
             Timber.e("erorrrrrrrrr $e")
             return MediatorResult.Error(e)
         }

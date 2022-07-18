@@ -1,11 +1,13 @@
 package com.development.hiltpractices.feature.searchphoto
 
+import androidx.annotation.Keep
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
+@Keep
 data class SearchPhotoResponse(
     @Json(name = "results")
     val results: List<Photo>,

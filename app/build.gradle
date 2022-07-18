@@ -8,32 +8,36 @@ plugins {
 }
 apply from: "$rootDir/dependencies.gradle"
 
-def versionMajor = 2
-def versionMinor = 7
-def versionPatch = 3
-def versionTemp = 8
+def versionMajor = 1
+def versionMinor = 0
+def versionPatch = 0
+def versionTemp = 0
+
+def secrets = loadProperties("secret.properties")
 
 android {
+    signingConfigs {
+        common {
+            storeFile file(secrets['STORE_FILE'])
+            storePassword secrets['STORE_PASSWORD']
+            keyAlias secrets['STORE_KEY_ALIAS']
+            keyPassword secrets['STORE_KEY_PASSWORD']
+        }
+    }
     compileSdk 32
 
     defaultConfig {
         applicationId "com.development.hiltpractices"
-        minSdkVersion  23
+        minSdkVersion 23
         targetSdk 32
         versionCode versionMajor * 1000 + versionMinor * 100 + versionPatch * 10 + versionTemp
         resConfigs "en", "vi"
         archivesBaseName = "${versionMajor}.${versionMinor}.${versionPatch}.(${versionTemp})"
 
-        def secret = loadProperties("secret.properties")
+        buildConfigField "String", "API_KEY", secrets['API_KEY']
+        manifestPlaceholders = [apiKey: secrets['API_KEY']]
 
-        buildConfigField "String", "API_KEY", secret['API_KEY']
-        manifestPlaceholders = [apiKey: secret['API_KEY']]
-
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments["dagger.hilt.disableModulesHaveInstallInCheck"] = "true"
-            }
-        }
+        signingConfig signingConfigs.common
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -49,6 +53,9 @@ android {
     buildFeatures {
         dataBinding true
     }
+    hilt {
+        enableAggregatingTask = true
+    }
 
     flavorDimensions "default"
 
@@ -59,18 +66,9 @@ android {
 
             target.buildConfigField("String", "APP_BASE_URL",
                     envProperties['APP_BASE_URL'])
+
             target.buildConfigField("String", "APP_CLIENT_ID",
                     envProperties['APP_CLIENT_ID'])
-            target.buildConfigField("String", "APP_SECRET_KEY",
-                    envProperties['APP_SECRET_KEY'])
-            target.buildConfigField("String", "URL_CONNECT_SOCKET_BASIC",
-                    envProperties['URL_CONNECT_SOCKET_BASIC'])
-            target.buildConfigField("String", "URL_BASIC_CHAT_BOT",
-                    envProperties['URL_BASIC_CHAT_BOT'])
-            target.buildConfigField("String", "URL_BASIC_RATING",
-                    envProperties['URL_BASIC_RATING'])
-            target.buildConfigField("String", "NOTIFICATION_BASE_URL",
-                    envProperties['NOTIFICATION_BASE_URL'])
         }
 
         dev {
@@ -121,15 +119,18 @@ android {
         }
 
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            minifyEnabled true
+            shrinkResources true
             crunchPngs false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
 }
 
 dependencies {
 //    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
+
+    implementation "androidx.security:security-crypto:$securityCryptoVersion"
 
     implementation "androidx.navigation:navigation-fragment-ktx:$navigationVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$navigationVersion"

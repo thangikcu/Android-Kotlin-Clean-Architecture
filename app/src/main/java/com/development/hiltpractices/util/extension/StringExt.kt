@@ -78,11 +78,11 @@ fun String.isNumeric(): Boolean {
 //endregion
 
 //region Encryption
-fun String.decode(): String {
+fun String.decodeFromBase64(): String {
     return Base64.decode(this, Base64.DEFAULT).toString(Charsets.UTF_8)
 }
 
-fun String.encode(): String {
+fun String.encodeToBase64(): String {
     return Base64.encodeToString(this.toByteArray(Charsets.UTF_8), Base64.DEFAULT)
 }
 

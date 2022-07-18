@@ -26,28 +26,27 @@ fun Exception.safeLog() {
     if (BuildConfig.DEBUG) printStackTrace()
 }
 
-inline fun <reified T : Any> Activity.launchActivity (
+inline fun <reified T : Any> Activity.launchActivity(
     requestCode: Int = -1,
     options: Bundle? = null,
     noinline init: Intent.() -> Unit = {}
-)
-{
+) {
     val intent = newIntent<T>(this)
     intent.init()
     startActivityForResult(intent, requestCode, options)
 }
 
-inline fun <reified T : Any> Context.launchActivity (
-        options: Bundle? = null,
-        noinline init: Intent.() -> Unit = {})
-{
+inline fun <reified T : Any> Context.launchActivity(
+    options: Bundle? = null,
+    noinline init: Intent.() -> Unit = {}
+) {
     val intent = newIntent<T>(this)
     intent.init()
     startActivity(intent, options)
 }
 
 inline fun <reified T : Any> newIntent(context: Context): Intent =
-        Intent(context, T::class.java)
+    Intent(context, T::class.java)
 
 fun TextView.underLine() {
     paint.flags = paint.flags or Paint.UNDERLINE_TEXT_FLAG
@@ -68,7 +67,12 @@ fun TextView.setColorOfSubstring(substring: String, color: Int) {
     try {
         val spannable = SpannableString(text)
         val start = text.indexOf(substring)
-        spannable.setSpan(ForegroundColorSpan(ContextCompat.getColor(context, color)), start, start + substring.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        spannable.setSpan(
+            ForegroundColorSpan(ContextCompat.getColor(context, color)),
+            start,
+            start + substring.length,
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
         text = spannable
     } catch (e: Exception) {
     }
@@ -89,8 +93,11 @@ fun Char.decimalValue(): Int {
     return this.code - '0'.code
 }
 
-inline fun SpannableStringBuilder.withSpan(vararg spans: Any, action: SpannableStringBuilder.() -> Unit):
-        SpannableStringBuilder {
+inline fun SpannableStringBuilder.withSpan(
+    vararg spans: Any,
+    action: SpannableStringBuilder.() -> Unit
+):
+    SpannableStringBuilder {
     val from = length
     action()
 

@@ -108,11 +108,11 @@ class MainActivity :
     }
 
     override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
         handleIntent(intent)
     }
 
     private fun handleIntent(intent: Intent) {
-
         if (Intent.ACTION_SEARCH == intent.action) {
             @Suppress("UNUSED_VARIABLE") val query = intent.getStringExtra(SearchManager.QUERY)
             //use the query to search your data somehow
@@ -122,7 +122,7 @@ class MainActivity :
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         return navController.navigateUp(appBarConfiguration)
-                || super.onSupportNavigateUp()
+            || super.onSupportNavigateUp()
     }
 
     override fun onShake(count: Int) {

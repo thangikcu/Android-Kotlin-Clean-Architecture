@@ -1,15 +1,16 @@
 package com.development.hiltpractices.util.debug
 
 import android.annotation.SuppressLint
+import androidx.annotation.Keep
 import com.development.hiltpractices.BuildConfig
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 @JsonClass(generateAdapter = true)
+@Keep
 data class LogInfo constructor(@Json(name = "id") var id: String) {
     @Json(name = "title")
     var title: String? = null

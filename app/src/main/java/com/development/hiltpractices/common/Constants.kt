@@ -5,6 +5,7 @@ package com.development.hiltpractices.common
 
 object Constants {
     const val APP_DATABASE_NAME = "app_database"
+    const val APP_SHARED_PREFERENCES_NAME = "app shared preferences"
 
     const val NETWORK_TIMEOUT = 1000L * 5
 

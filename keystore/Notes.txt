@@ -1,0 +1,4 @@
+Common_Keystore.jks
+Chienthan123
+Key alias: CommonKey
+============================
