@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.development.clean.util.debug.LogInfo" />
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/item_logcat_layout_event"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:padding="2dp"
+            android:text="@{item.title}"
+            android:textColor="@{item.loadFromCache ? @color/yellow : @color/black}"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_title"
+            android:gravity="center_vertical"
+            android:padding="2dp"
+            android:text="@{item.subTitle}"
+            android:textColor="#000000"
+            android:textSize="14sp"
+            android:textStyle="normal" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/tv_description"
+            android:background="#4d000000"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp" />
+    </RelativeLayout>
+</layout>
