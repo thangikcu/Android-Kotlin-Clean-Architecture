@@ -29,7 +29,9 @@
         </com.google.android.material.appbar.AppBarLayout>
 
         <include
-            layout="@layout/content_main" />
+            layout="@layout/content_main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab"
@@ -38,8 +40,10 @@
             android:layout_gravity="bottom|end"
             android:layout_marginEnd="@dimen/fab_margin"
             android:layout_marginBottom="16dp"
+            android:minWidth="48dp"
+            android:minHeight="48dp"
             app:srcCompat="@android:drawable/ic_dialog_email"
-            tools:ignore="ContentDescription" />
+            tools:ignore="ContentDescription,SpeakableTextPresentCheck,ImageContrastCheck" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

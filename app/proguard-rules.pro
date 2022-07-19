@@ -26,6 +26,7 @@
 }
 -keep class com.development.hiltpractices.model.**
 
+-dontwarn com.google.errorprone.annotations.Immutable
 -dontwarn org.bouncycastle.jsse.BCSSLParameters
 -dontwarn org.bouncycastle.jsse.BCSSLSocket
 -dontwarn org.bouncycastle.jsse.provider.BouncyCastleJsseProvider

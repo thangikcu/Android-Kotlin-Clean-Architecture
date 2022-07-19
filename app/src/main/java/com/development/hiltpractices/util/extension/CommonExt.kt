@@ -2,7 +2,6 @@
 
 package com.development.hiltpractices.util.extension
 
-
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -11,19 +10,22 @@ import android.graphics.Matrix
 import android.graphics.Paint
 import android.graphics.Typeface
 import android.os.Bundle
-import android.text.*
+import android.text.Editable
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.SpannableStringBuilder
+import android.text.Spanned
 import android.text.style.ForegroundColorSpan
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import com.development.hiltpractices.BuildConfig
+import com.development.hiltpractices.util.debug.Timber
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 
-
 fun Exception.safeLog() {
-    if (BuildConfig.DEBUG) printStackTrace()
+    Timber.e(this)
 }
 
 inline fun <reified T : Any> Activity.launchActivity(
@@ -85,7 +87,6 @@ fun TextView.font(font: String) {
 fun TextView.setDrawableLeft(drawable: Int) {
     this.setCompoundDrawablesWithIntrinsicBounds(drawable, 0, 0, 0)
 }
-
 
 fun Char.decimalValue(): Int {
     if (!isDigit())

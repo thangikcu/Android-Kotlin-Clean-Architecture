@@ -1,18 +1,18 @@
 package com.development.hiltpractices.util.debug
 
 
-import okhttp3.Headers
-import okhttp3.Interceptor
-import okhttp3.Response
-import okhttp3.internal.http.StatusLine.Companion.HTTP_CONTINUE
-import okio.Buffer
-import okio.GzipSource
 import java.io.EOFException
 import java.io.IOException
 import java.net.HttpURLConnection
 import java.nio.charset.Charset
 import java.nio.charset.StandardCharsets.UTF_8
 import java.util.concurrent.TimeUnit
+import okhttp3.Headers
+import okhttp3.Interceptor
+import okhttp3.Response
+import okhttp3.internal.http.StatusLine.Companion.HTTP_CONTINUE
+import okio.Buffer
+import okio.GzipSource
 
 class HttpLoggingInterceptor : Interceptor {
 
@@ -162,7 +162,6 @@ class HttpLoggingInterceptor : Interceptor {
 
         logInfo.addContent(contentResponseBody, "Response body")
         logInfo.commitLog()
-
         return response
     }
 

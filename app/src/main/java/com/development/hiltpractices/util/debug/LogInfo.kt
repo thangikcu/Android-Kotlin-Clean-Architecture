@@ -5,9 +5,9 @@ import androidx.annotation.Keep
 import com.development.hiltpractices.BuildConfig
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.*
+import org.json.JSONObject
 
 @JsonClass(generateAdapter = true)
 @Keep
@@ -69,6 +69,7 @@ data class LogInfo constructor(@Json(name = "id") var id: String) {
         subTitle =
             SimpleDateFormat("dd/MM HH:mm:ss").format(startTime) + " ~($diffInSeconds seconds)"
         Logcat.evenUpdateLog()
+        Timber.d(getContent())
         return this
     }
 }

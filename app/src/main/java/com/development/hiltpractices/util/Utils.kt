@@ -24,15 +24,41 @@ import java.util.concurrent.TimeUnit
 
 object Utils {
 
+    //API 19 4.4 in October 2013
     fun fromKitKat() = fromSpecificVersion(Build.VERSION_CODES.KITKAT)
+
+    //API 23 Marshmallow 6.0 in October 2015
     fun fromM() = fromSpecificVersion(Build.VERSION_CODES.M)
     fun beforeM() = beforeSpecificVersion(Build.VERSION_CODES.M)
+
+    //API 24 Nougat 7.0 in August 2016
     fun fromN() = fromSpecificVersion(Build.VERSION_CODES.N)
     fun beforeN() = beforeSpecificVersion(Build.VERSION_CODES.N)
+
+    //API 26 Oreo 8.0 in August 2017
     fun fromO() = fromSpecificVersion(Build.VERSION_CODES.O)
     fun beforeO() = beforeSpecificVersion(Build.VERSION_CODES.O)
+
+    //API 28 Pie 9 in August 2018
     fun fromP() = fromSpecificVersion(Build.VERSION_CODES.P)
     fun beforeP() = beforeSpecificVersion(Build.VERSION_CODES.P)
+
+    //API 29 10 in September 2019
+    fun fromQ() = fromSpecificVersion(Build.VERSION_CODES.Q)
+    fun beforeQ() = beforeSpecificVersion(Build.VERSION_CODES.Q)
+
+    //API 30 11 in September 2020
+    fun fromR() = fromSpecificVersion(Build.VERSION_CODES.R)
+    fun beforeR() = beforeSpecificVersion(Build.VERSION_CODES.R)
+
+    //API 31 12
+    fun fromS() = fromSpecificVersion(Build.VERSION_CODES.S)
+    fun beforeS() = beforeSpecificVersion(Build.VERSION_CODES.S)
+
+    //API 32 12
+    fun fromSv2() = fromSpecificVersion(Build.VERSION_CODES.S_V2)
+    fun beforeSv2() = beforeSpecificVersion(Build.VERSION_CODES.S_V2)
+
     fun fromSpecificVersion(version: Int): Boolean = Build.VERSION.SDK_INT >= version
     fun beforeSpecificVersion(version: Int): Boolean = Build.VERSION.SDK_INT < version
 

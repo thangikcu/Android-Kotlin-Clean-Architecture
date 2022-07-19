@@ -10,6 +10,7 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import androidx.activity.viewModels
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.MenuProvider
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.Lifecycle
@@ -43,7 +44,13 @@ class MainActivity :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         WindowCompat.setDecorFitsSystemWindows(window, false)
+        val splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)
+
+        splashScreen.setKeepOnScreenCondition {
+            !viewModel.isLoadSuccess.value
+        }
+        viewModel.loadData()
 
         if (AppSharedPrefs.firstOpen) {
             AppSharedPrefs.firstOpen = false
