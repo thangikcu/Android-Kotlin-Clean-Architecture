@@ -64,5 +64,5 @@ jobs:
     - uses: actions/upload-artifact@v3
       with:
         name: apks
-        path: build/outputs/apk
+        path: app/build/outputs/apk
         if-no-files-found: error
