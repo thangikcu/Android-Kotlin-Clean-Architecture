@@ -13,11 +13,13 @@ val secrets = loadProperties("secret.properties")
 
 android {
     signingConfigs {
-        create("common") {
-            storeFile = file(secrets.getProperty("STORE_FILE"))
-            storePassword = secrets.getProperty("STORE_PASSWORD")
-            keyAlias = secrets.getProperty("STORE_KEY_ALIAS")
-            keyPassword = secrets.getProperty("STORE_KEY_PASSWORD")
+        if (secrets != null) {
+            create("common") {
+                storeFile = file(secrets.getProperty("STORE_FILE"))
+                storePassword = secrets.getProperty("STORE_PASSWORD")
+                keyAlias = secrets.getProperty("STORE_KEY_ALIAS")
+                keyPassword = secrets.getProperty("STORE_KEY_PASSWORD")
+            }
         }
     }
     compileSdk = AppConfig.compileSdkVersion
@@ -28,9 +30,11 @@ android {
         targetSdk = AppConfig.targetSdkVersion
         versionCode = AppConfig.versionCode
         resourceConfigurations.addAll(listOf("en", "vi"))
-        buildConfigField("String", "API_KEY", secrets.getProperty("API_KEY"))
-        manifestPlaceholders["apiKey"] = secrets.getProperty("API_KEY")
-        signingConfig = signingConfigs.getByName("common")
+        if (secrets != null) {
+            signingConfig = signingConfigs.getByName("common")
+        }
+        buildConfigField("String", "API_KEY", secrets?.getProperty("API_KEY") ?: "\"\"")
+        manifestPlaceholders["apiKey"] = secrets?.getProperty("API_KEY") ?: ""
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     buildFeatures { dataBinding = true }
@@ -163,11 +167,16 @@ dependencies {
 
 }
 
-fun loadProperties(filename: String): Properties {
-    val properties = Properties()
+fun loadProperties(filename: String): Properties? {
+    val file = project.rootProject.file(filename)
+    var properties: Properties? = null
 
-    project.rootProject.file(filename).inputStream().use {
-        properties.load(it)
+    if (file.exists()) {
+        file.inputStream().use { inputStream ->
+            properties = Properties().also {
+                it.load(inputStream)
+            }
+        }
     }
 
     return properties
@@ -177,16 +186,18 @@ fun findPropertyByKey(key: String): String {
     return project.findProperty(key) as String
 }
 
-fun loadEnv(target: com.android.build.api.dsl.ApplicationProductFlavor, envPath: String) {
-    val envProperties = loadProperties(envPath)
+fun loadEnv(target: com.android.build.api.dsl.ApplicationProductFlavor, envFile: String) {
+    val envProperties = loadProperties(envFile)
 
-    target.buildConfigField(
-        "String", "APP_BASE_URL",
-        envProperties.getProperty("APP_BASE_URL")
-    )
+    if (envProperties != null) {
+        target.buildConfigField(
+            "String", "APP_BASE_URL",
+            envProperties.getProperty("APP_BASE_URL")
+        )
 
-    target.buildConfigField(
-        "String", "APP_CLIENT_ID",
-        envProperties.getProperty("APP_CLIENT_ID")
-    )
+        target.buildConfigField(
+            "String", "APP_CLIENT_ID",
+            envProperties.getProperty("APP_CLIENT_ID")
+        )
+    }
 }
