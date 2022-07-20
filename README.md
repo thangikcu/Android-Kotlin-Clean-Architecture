@@ -1,4 +1,5 @@
-## Welcome to GitHub Pages
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/thangikcu/Android-Kotlin-Clean-Architecture/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/thangikcu/Android-Kotlin-Clean-Architecture/tree/main)
+## Welcome to My project
 
 You can use the [editor on GitHub](https://github.com/thangikcu/Android-Kotlin-Clean-Architecture/edit/main/README.md) to maintain and preview the content for your website in Markdown files.
 
