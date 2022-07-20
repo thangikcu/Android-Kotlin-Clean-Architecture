@@ -23,14 +23,20 @@ jobs:
     - name: Create file secret.properties
       env:
         FILE_NAME: secret.properties
+        
+        API_KEY: ${{secrets.API_KEY}}
+        STORE_FILE: ${{secrets.STORE_FILE}}
+        STORE_PASSWORD: ${{secrets.STORE_PASSWORD}}
+        STORE_KEY_ALIAS: ${{secrets.STORE_KEY_ALIAS}}
+        STORE_KEY_PASSWORD: ${{secrets.STORE_KEY_PASSWORD}}
       run: |
         echo "$FILE_NAME"
         touch "$FILE_NAME"
-        echo API_KEY="\"${{secrets.API_KEY}}\"" >> "$FILE_NAME"
-        echo STORE_FILE="${{secrets.STORE_FILE}}" >> "$FILE_NAME"
-        echo STORE_PASSWORD="${{secrets.STORE_PASSWORD}}" >> "$FILE_NAME"
-        echo STORE_KEY_ALIAS="${{secrets.STORE_KEY_ALIAS}}" >> "$FILE_NAME"
-        echo STORE_KEY_PASSWORD="${{secrets.STORE_KEY_PASSWORD}}" >> "$FILE_NAME"
+        echo API_KEY="\"$API_KEY\"" >> "$FILE_NAME"
+        echo STORE_FILE="$STORE_FILE" >> "$FILE_NAME"
+        echo STORE_PASSWORD="$STORE_PASSWORD" >> "$FILE_NAME"
+        echo STORE_KEY_ALIAS="$STORE_KEY_ALIAS" >> "$FILE_NAME"
+        echo STORE_KEY_PASSWORD="$STORE_KEY_PASSWORD" >> "$FILE_NAME"
         
         cat "$FILE_NAME"
       shell: bash
