@@ -1,4 +1,7 @@
-[![CircleCI](https://dl.circleci.com/status-badge/img/gh/thangikcu/Android-Kotlin-Clean-Architecture/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/thangikcu/Android-Kotlin-Clean-Architecture/tree/main)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Zococo_Android-Kotlin-Clean-Architecture&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=Zococo_Android-Kotlin-Clean-Architecture)
+[![Codacy Security Scan](https://github.com/thangikcu/Android-Kotlin-Clean-Architecture/actions/workflows/codacy.yml/badge.svg?branch=main)](https://github.com/thangikcu/Android-Kotlin-Clean-Architecture/actions/workflows/codacy.yml)
+[![Scan with Detekt](https://github.com/thangikcu/Android-Kotlin-Clean-Architecture/actions/workflows/detekt.yml/badge.svg?branch=main)](https://github.com/thangikcu/Android-Kotlin-Clean-Architecture/actions/workflows/detekt.yml)
+[![Android CI](https://github.com/thangikcu/Android-Kotlin-Clean-Architecture/actions/workflows/android.yml/badge.svg?branch=main)](https://github.com/thangikcu/Android-Kotlin-Clean-Architecture/actions/workflows/android.yml)
 ## Welcome to My project
 
 You can use the [editor on GitHub](https://github.com/thangikcu/Android-Kotlin-Clean-Architecture/edit/main/README.md) to maintain and preview the content for your website in Markdown files.
