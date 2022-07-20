@@ -2,11 +2,24 @@
 [![Codacy Security Scan](https://github.com/thangikcu/Android-Kotlin-Clean-Architecture/actions/workflows/codacy.yml/badge.svg?branch=main)](https://github.com/thangikcu/Android-Kotlin-Clean-Architecture/actions/workflows/codacy.yml)
 [![Scan with Detekt](https://github.com/thangikcu/Android-Kotlin-Clean-Architecture/actions/workflows/detekt.yml/badge.svg?branch=main)](https://github.com/thangikcu/Android-Kotlin-Clean-Architecture/actions/workflows/detekt.yml)
 [![Android CI](https://github.com/thangikcu/Android-Kotlin-Clean-Architecture/actions/workflows/android.yml/badge.svg?branch=main)](https://github.com/thangikcu/Android-Kotlin-Clean-Architecture/actions/workflows/android.yml)
-## Welcome to My project
 
-You can use the [editor on GitHub](https://github.com/thangikcu/Android-Kotlin-Clean-Architecture/edit/main/README.md) to maintain and preview the content for your website in Markdown files.
+## 🏗️️ Built with
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+| Component       | Tool                          |
+|----------------	|------------------------------	|
+| 🎭  User Interface    | [Jetpack Compose](https://developer.android.com/jetpack/compose)                |
+| 🏗  Architecture    | [MVVM](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel)                            |
+| 🧠  Backend    | [Unsplash](https://unsplash.com)                            |
+| 💉  DI                | [Hilt](https://dagger.dev/hilt/)                        |
+| 🛣️  Navigation        | [Compose Navigation](https://developer.android.com/jetpack/compose/navigation)                        |
+| 🌊  Async            | [Coroutines](https://kotlinlang.org/docs/coroutines-overview.html) + [Flow + StateFlow + SharedFlow](https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/)                |
+| 🌐  Networking        | [Retrofit](https://github.com/square/retrofit)                        |
+| 📄  JSON            | [Moshi](https://github.com/Kotlin/kotlinx.serialization)                            |
+| 💾  Persistance     | [Room](https://developer.android.com/training/data-storage/room) + [Preference DataStore](https://developer.android.com/topic/libraries/architecture/datastore)   |
+| ⌨️  Logging            | [Timber](https://github.com/JakeWharton/timber)                            |
+| 📸  Image Loading      | [Coil](https://coil-kt.github.io/coil/)                            |
+| 🔧  Supplimentary   | [Accompanist](https://github.com/google/accompanist)  |
+| 🧪  Testing            | [Mockito](https://site.mockito.org/) + [JUnit](https://github.com/junit-team/junit5) + [Robolectric](https://github.com/robolectric/robolectric)   |
 
 ### Markdown
 
@@ -30,12 +43,6 @@ Syntax highlighted code block
 [Link](url) and ![Image](src)
 ```
 
-For more details see [Basic writing and formatting syntax](https://docs.github.com/en/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/thangikcu/Android-Kotlin-Clean-Architecture/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
 ### Support or Contact
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+Having trouble [contact support](thanggun99@gmail.com) and we’ll help you.
