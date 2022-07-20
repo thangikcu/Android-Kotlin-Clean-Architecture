@@ -25,11 +25,11 @@ jobs:
         FILE_NAME: secret.properties
       run: |
         touch "$FILE_NAME"
-        echo API_KEY="\"${secrets.API_KEY}\"" >> "$FILE_NAME"
-        echo STORE_FILE="${secrets.STORE_FILE}" >> "$FILE_NAME"
-        echo STORE_PASSWORD="${secrets.STORE_PASSWORD}" >> "$FILE_NAME"
-        echo STORE_KEY_ALIAS="${secrets.STORE_KEY_ALIAS}" >> "$FILE_NAME"
-        echo STORE_KEY_PASSWORD="${secrets.STORE_KEY_PASSWORD}" >> "$FILE_NAME"
+        echo API_KEY="\"${{secrets.API_KEY}}\"" >> "$FILE_NAME"
+        echo STORE_FILE="${{secrets.STORE_FILE}}" >> "$FILE_NAME"
+        echo STORE_PASSWORD="${{secrets.STORE_PASSWORD}}" >> "$FILE_NAME"
+        echo STORE_KEY_ALIAS="${{secrets.STORE_KEY_ALIAS}}" >> "$FILE_NAME"
+        echo STORE_KEY_PASSWORD="${{secrets.STORE_KEY_PASSWORD}}" >> "$FILE_NAME"
         
         cat "$FILE_NAME"
         shell: bash
