@@ -6,9 +6,9 @@ object AppConfig {
     const val versionPatch = 0
     const val versionTemp = 1
 
-    const val compileSdkVersion = 32
+    const val compileSdkVersion = 33
     const val minSdkVersion = 23
-    const val targetSdkVersion = 32
+    const val targetSdkVersion = 33
 
     const val versionName = "${versionMajor}.${versionMinor}.${versionPatch}"
     const val versionCode =

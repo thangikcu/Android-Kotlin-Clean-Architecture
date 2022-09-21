@@ -4,17 +4,16 @@ git update-index --no-skip-worktree secret.properties
 gradlew spotlessCheck
 gradlew spotlessApply
 
-Migrate project:
+{
 
-./gradlew refreshVersionsMigrate
+    gradlew versionCatalogUpdate --create
+    gradlew versionCatalogUpdate
+    gradlew versionCatalogUpdate --interactive
+    gradlew versionCatalogApplyUpdates
 
-Find available updates in versions.properties:
+    gradlew versionCatalogFormat
 
-./gradlew refreshVersions
-
-Cleanup versions availability comments:
-
-./gradlew refreshVersionsCleanup
+}
 
 Debug : 6897BB
 Info : 6A8759

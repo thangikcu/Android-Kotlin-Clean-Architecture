@@ -7,7 +7,7 @@
 
         <variable
             name="vm"
-            type="com.development.hiltpractices.feature.searchphoto.SearchPhotoViewModel" />
+            type="com.development.clean.feature.searchphoto.SearchPhotoViewModel" />
     </data>
 
 

@@ -20,10 +20,11 @@ android {
             keyPassword = secrets.getProperty("STORE_KEY_PASSWORD")
         }
     }
+    namespace = "com.development.clean"
     compileSdk = AppConfig.compileSdkVersion
 
     defaultConfig {
-        applicationId = "com.development.hiltpractices"
+        applicationId = "com.development.clean"
         minSdk = AppConfig.minSdkVersion
         targetSdk = AppConfig.targetSdkVersion
         versionCode = AppConfig.versionCode
@@ -108,58 +109,58 @@ android {
 
 dependencies {
 
-    implementation(Dependencies.coreKtx)
-    implementation(Dependencies.appCompat)
-    implementation(Dependencies.appCompatResource)
-    implementation(Dependencies.startupRuntime)
-    implementation(Dependencies.legacySupport)
-    implementation(Dependencies.lifecycleLiveData)
-    implementation(Dependencies.lifecycleViewModel)
-    implementation(Dependencies.coroutineCore)
-    implementation(Dependencies.coroutineAndroid)
+    implementation(libs.androidx.core.core.ktx)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.appcompat.appcompat.resources)
+    implementation(libs.androidx.startup.startup.runtime)
+    implementation(libs.androidx.legacy.legacy.support.v4)
+    implementation(libs.androidx.lifecycle.lifecycle.livedata.ktx)
+    implementation(libs.androidx.lifecycle.lifecycle.viewmodel.ktx)
+    implementation(libs.org.jetbrains.kotlinx.kotlinx.coroutines.core)
+    implementation(libs.org.jetbrains.kotlinx.kotlinx.coroutines.android)
 
-    implementation(Dependencies.splashScreen)
+    implementation(libs.androidx.core.core.splashscreen)
 
-    implementation(Dependencies.securityCrypto)
+    implementation(libs.androidx.security.security.crypto)
 
-    implementation(Dependencies.navigationFragment)
-    implementation(Dependencies.navigationUi)
+    implementation(libs.androidx.navigation.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.navigation.ui.ktx)
 
-    implementation(Dependencies.glide)
+    implementation(libs.com.github.bumptech.glide)
 
-    implementation(Dependencies.pagingRuntime)
+    implementation(libs.androidx.paging.paging.runtime.ktx)
 
-    implementation(Dependencies.workRuntime)
-    implementation(Dependencies.hiltWork)
-    kapt(Dependencies.kaptHiltWork)
+    implementation(libs.androidx.work.work.runtime.ktx)
+    implementation(libs.androidx.hilt.hilt.work)
+    kapt(libs.androidx.hilt.hilt.compiler)
 
-    implementation(Dependencies.room)
-    implementation(Dependencies.roomPaging)
-    implementation(Dependencies.roomRuntime)
-    kapt(Dependencies.kaptRoomCompiler)
+    implementation(libs.androidx.room.room.ktx)
+    implementation(libs.androidx.room.room.paging)
+    implementation(libs.androidx.room.room.runtime)
+    kapt(libs.androidx.room.room.compiler)
 
-    implementation(Dependencies.retrofit)
-    implementation(Dependencies.moshiConverter)
-    implementation(Dependencies.loggingInterceptor)
+    implementation(libs.com.squareup.retrofit2.retrofit)
+    implementation(libs.com.squareup.retrofit2.converter.moshi)
+    implementation(libs.com.squareup.okhttp3.logging.interceptor)
 
-    implementation(Dependencies.moshi)
-    kapt(Dependencies.kaptMoshi)
+    implementation(libs.com.squareup.moshi.moshi.kotlin)
+    kapt(libs.com.squareup.moshi.moshi.kotlin.codegen)
 
-    implementation(Dependencies.hilt)
-    kapt(Dependencies.kaptHilt)
+    implementation(libs.com.google.dagger.hilt.android)
+    kapt(libs.com.google.dagger.hilt.compiler)
 
 
-    implementation(Dependencies.material)
-    implementation(Dependencies.constraintLayout)
+    implementation(libs.com.google.android.material)
+    implementation(libs.androidx.constraintlayout)
 
     // For debug
-    debugImplementation(Dependencies.leakCanary)
-    implementation(Dependencies.logger)
+    debugImplementation(libs.com.squareup.leakcanary.leakcanary.android)
+    implementation(libs.com.orhanobut.logger)
 
     // For test
-    testImplementation(Dependencies.junit)
-    androidTestImplementation(Dependencies.junitTest)
-    androidTestImplementation(Dependencies.espressoCore)
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.test.ext.junit)
+    androidTestImplementation(libs.androidx.test.espresso.espresso.core)
 
 }
 

@@ -20,11 +20,11 @@
 # hide the original source file name.
 -renamesourcefileattribute SourceFile
 
--keepclasseswithmembers class com.development.hiltpractices.** {
+-keepclasseswithmembers class com.development.clean.** {
     public ** component1();
     <fields>;
 }
--keep class com.development.hiltpractices.model.**
+-keep class com.development.clean.model.**
 
 -dontwarn com.google.errorprone.annotations.Immutable
 -dontwarn org.bouncycastle.jsse.BCSSLParameters

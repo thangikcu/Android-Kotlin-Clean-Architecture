@@ -15,10 +15,10 @@
 
         <!-- Set the theme of the Activity that directly follows your splash screen. -->
         <!-- Required -->
-        <item name="postSplashScreenTheme">@style/Theme.HiltPractices</item>
+        <item name="postSplashScreenTheme">@style/Theme.Clean</item>
     </style>
 
-    <style name="Theme.HiltPractices" parent="Base.Theme.HiltPractices">
+    <style name="Theme.Clean" parent="Base.Theme.Clean">
         <item name="android:navigationBarColor">@android:color/transparent
         </item>
         <item name="android:statusBarColor">@android:color/transparent</item>
@@ -27,7 +27,7 @@
     </style>
 
     <!-- Base application theme. -->
-    <style name="Base.Theme.HiltPractices" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Base.Theme.Clean" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
         <item name="colorOnPrimary">@color/white</item>
